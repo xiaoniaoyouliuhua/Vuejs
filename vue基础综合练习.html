@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <style>
+		.red{
+			background-color: #f0f;
+			color:#fff;
+		}
+		.skyblue{
+			background-color: #0f0;
+			color:#fff;
+		}
+    </style>
+    <body>
+    	<div id="app">
+    		<ul>
+    			<li v-for="item in list" 
+    			:class="{red:item.sex==1,skyblue:item.sex==0}"
+    			@click="showInForm(item)">
+    				<div>编号：{{item.id}}</div>
+    				<div>{{item.name}}</div>
+    				<div>{{item.age}}</div>
+    				<div v-if="item.sex==1">sex:男</div>
+    				<div v-else>sex:女</div>
+    				<div>爱好：{{item.hobby.join(";")}}</div>
+    				<div>薪资：{{item.slary}}元</div>
+    				<div v-html="item.motto"></div>
+    			</li>
+    		</ul>
+    		<br>----------------------------------------
+    		<form action="">
+    				<p>姓名: <input type="text" v-model="newItem.name"></p>
+    				<p>年龄: <input type="text" v-model="newItem.age"></p>
+    				<span>性别：</span>男<input type="radio" value="1" v-model="newItem.sex">女<input type="radio" value="0" v-model="newItem.sex">
+    				<p>爱好：		    
+						 吃饭: <input type="checkbox" value="吃饭" v-model="newItem.hobby">
+						 睡觉: <input type="checkbox" value="睡觉" v-model="newItem.hobby">
+						 打豆豆: <input type="checkbox" value="打豆豆" v-model="newItem.hobby">
+						 健身: <input type="checkbox" value="健身" v-model="newItem.hobby">
+						 看别人打豆豆: <input type="checkbox" value="看别人打豆豆" v-model="newItem.hobby">
+    				</p>
+    				<p>月薪：<input type="text" v-model="newItem.slary"></p>
+    				<!-- <textarea name="" id="" cols="30" rows="10" v-model="list[0]"></textarea> -->
+    				<button @click.prevent="toLocal">提交</button>
+    		</form>
+    	</div>
+    <script src="01.v-html/node_modules/vue/dist/vue.js"></script>
+    <script>
+     const list = [
+  {id:1,name:'小明',age:18,sex:1,hobby:['吃饭','睡觉','打豆豆'],slary:999000,motto:'<div>人生自古谁无死，留取丹心照汗青</div>'},
+  {id:2,name:'小蒙',age:16,sex:0,hobby:['健身','睡觉','看别人打豆豆'],slary:99900,motto:'<div>移来此种非人简，曾识成年觞底月</div>'}
+  ]
+    	const vm=new Vue({
+    		el:"#app",
+    		data:{
+    			list,
+    			newItem:{}
+    		},
+    		methods:{
+    			showInForm:function(item){
+    				// console.log(item);
+    				this.newItem=item;
+    			},
+    			toLocal:function(){
+    				localStorage.setItem("22期",JSON.stringify(this.newItem))
+    			}
+    		}
+    	})
+    </script>
+    </body>
+</html>
